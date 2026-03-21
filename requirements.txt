@@ -5,4 +5,4 @@ ultralytics==8.2.0
 opencv-python-headless==4.10.0.84
 numpy>=2.0.0
 matplotlib>=3.9.0
-# 不手动指定 Pillow，由 streamlit/torchvision 自动引入兼容预编译版
+# 注意：这里完全不写 Pillow！
