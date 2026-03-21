@@ -1,7 +1,13 @@
-streamlit==1.36.0
-torch==2.2.2
-torchvision==0.17.2
-ultralytics==8.1.32
-opencv-python-headless==4.8.0.76
-numpy==1.26.4
-Pillow==10.2.0
+# 核心框架（适配 Python 3.14）
+streamlit==1.38.0
+torch>=2.5.0
+torchvision>=0.20.0
+
+# YOLOv8 + OpenCV（云端专用版）
+ultralytics==8.2.0
+opencv-python-headless==4.10.0.84  # 最新兼容版
+
+# 基础依赖（稳定版本）
+numpy>=2.0.0
+Pillow>=11.0.0
+matplotlib>=3.9.0
