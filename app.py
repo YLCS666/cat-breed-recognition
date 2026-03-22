@@ -87,23 +87,36 @@ def predict_cat_breed(model, image):
 
 # ====================== 4. 可视化（适配手机，保留核心） ======================
 def plot_prediction(probabilities, top5_classes, top5_probs):
-    # 修复中文乱码：使用系统兼容的无衬线字体
-    plt.rcParams['font.sans-serif'] = ['WenQuanYi Zen Hei', 'DejaVu Sans', 'Arial Unicode MS', 'SimHei']
-    plt.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    import matplotlib.font_manager as fm
+
+    # 强制加载 WenQuanYi Zen Hei 中文字体（Streamlit Cloud 自带）
+    plt.rcParams['font.sans-serif'] = ['WenQuanYi Zen Hei', 'DejaVu Sans']
+    plt.rcParams['axes.unicode_minus'] = False
     plt.rcParams['font.family'] = 'sans-serif'
-    
+
+    # 尝试加载系统中文字体，兜底方案
+    try:
+        font_path = fm.findfont(fm.FontProperties(family='WenQuanYi Zen Hei'))
+        custom_font = fm.FontProperties(fname=font_path)
+    except:
+        custom_font = fm.FontProperties(family='sans-serif')
+
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 5))
     colors = sns.color_palette('viridis', 5)
-    
-    # 前5名柱状图
+
+    # 前5名柱状图（指定字体）
     ax1.barh(top5_classes[::-1], top5_probs[::-1], color=colors)
-    ax1.set_xlabel('置信度', fontsize=12)
-    ax1.set_title('前5名品种预测结果', fontsize=14, fontweight='bold')
+    ax1.set_xlabel('置信度', fontproperties=custom_font, fontsize=12)
+    ax1.set_title('前5名品种预测结果', fontproperties=custom_font, fontsize=14, fontweight='bold')
     ax1.set_xlim(0, 1.0)
     for i, (cls, prob) in enumerate(zip(top5_classes[::-1], top5_probs[::-1])):
         ax1.text(prob + 0.01, i, f'{prob:.2%}', va='center', fontsize=10)
-    
-    # 所有品种热力图
+    # 为Y轴标签指定字体
+    ax1.set_yticklabels(top5_classes[::-1], fontproperties=custom_font)
+
+    # 所有品种热力图（指定字体）
     im = ax2.imshow(probabilities.reshape(3, 4), cmap='YlOrRd', aspect='auto')
     ax2.set_xticks(range(4))
     ax2.set_yticks(range(3))
@@ -114,11 +127,11 @@ def plot_prediction(probabilities, top5_classes, top5_probs):
             idx = i * 4 + j
             if idx < 12:
                 ax2.text(j, i, f'{CAT_CLASS_NAMES[idx]}\n{probabilities[idx]:.1%}',
-                         ha='center', va='center', fontsize=8, color='black')
-    ax2.set_title('所有品种置信度分布', fontsize=14, fontweight='bold')
+                         ha='center', va='center', fontsize=8, color='black', fontproperties=custom_font)
+    ax2.set_title('所有品种置信度分布', fontproperties=custom_font, fontsize=14, fontweight='bold')
     cbar = plt.colorbar(im, ax=ax2, shrink=0.8)
-    cbar.set_label('置信度', fontsize=10)
-    
+    cbar.set_label('置信度', fontproperties=custom_font, fontsize=10)
+
     plt.tight_layout()
     return fig
 
