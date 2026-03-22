@@ -1,14 +1,17 @@
 # 核心框架
 streamlit>=1.32.0,<2.0.0
 
-# PyTorch CPU版（适配Python3.10）
+# PyTorch CPU版
 torch==2.2.0
 torchvision==0.17.0
 --extra-index-url https://download.pytorch.org/whl/cpu
 
-# 基础依赖（无cv2/ultralytics）
+# 基础依赖
 pillow==10.2.0
 numpy==1.24.3
 matplotlib==3.8.4
 seaborn==0.13.2
 requests==2.31.0
+
+# 中文支持（可选，增强字体兼容性）
+fonttools==4.49.0
