@@ -87,9 +87,12 @@ def predict_cat_breed(model, image):
 
 # ====================== 4. 可视化（适配手机，保留核心） ======================
 def plot_prediction(probabilities, top5_classes, top5_probs):
-    plt.rcParams['font.sans-serif'] = ['SimHei']
-    plt.rcParams['axes.unicode_minus'] = False
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 5))  # 适配手机
+    # 修复中文乱码：使用系统兼容的无衬线字体
+    plt.rcParams['font.sans-serif'] = ['WenQuanYi Zen Hei', 'DejaVu Sans', 'Arial Unicode MS', 'SimHei']
+    plt.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+    plt.rcParams['font.family'] = 'sans-serif'
+    
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 5))
     colors = sns.color_palette('viridis', 5)
     
     # 前5名柱状图
