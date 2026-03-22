@@ -1,5 +1,5 @@
 [server]
-maxUploadSize = 100
+maxUploadSize = 50  # 手机拍照通常小于10MB，50MB足够
 enableXsrfProtection = false
 enableCORS = false
 
@@ -12,3 +12,12 @@ font = "sans serif"
 
 [browser]
 gatherUsageStats = false
+
+# 手机端特定配置
+[client]
+showSidebarNavigation = false  # 隐藏侧边栏导航
+toolbarMode = "minimal"        # 最小化工具栏
+
+[runner]
+# 关闭自动重载，节省手机端资源
+watchdogPollRate = 0
