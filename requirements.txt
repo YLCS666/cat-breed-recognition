@@ -1,27 +1,14 @@
-# 基础配置：指定Python版本兼容（仅注释，实际在Streamlit后台选3.10）
-# Python == 3.10
-
-# Streamlit核心
+# 核心框架
 streamlit>=1.32.0,<2.0.0
 
-# PyTorch（适配Linux + Python3.10）
-torch==2.2.2
-torchvision==0.17.2
-torchaudio==2.2.2
---extra-index-url https://download.pytorch.org/whl/cpu  # 仅CPU版本，适配Streamlit Cloud
+# PyTorch CPU版（适配Python3.10）
+torch==2.2.0
+torchvision==0.17.0
+--extra-index-url https://download.pytorch.org/whl/cpu
 
-# YOLOv8 + OpenCV（关键修复：用opencv-python-headless，无GUI依赖）
-ultralytics==8.1.32
-opencv-python-headless==4.8.1.78  # 重点：替换普通opencv-python为headless版本
-
-# 图像处理/可视化
+# 基础依赖（无cv2/ultralytics）
 pillow==10.2.0
-numpy==1.26.4
+numpy==1.24.3
 matplotlib==3.8.4
 seaborn==0.13.2
 requests==2.31.0
-
-# 补充ultralytics依赖的其他库
-psutil==5.9.8
-pyyaml==6.0.1
-tqdm==4.66.2
